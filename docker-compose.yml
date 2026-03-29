@@ -75,6 +75,25 @@ services:
       - WATCH=true
       - PUPPETEER_SKIP_DOWNLOAD=true
 
+  pwa:
+    build:
+      context: ./
+      dockerfile: ./ops/dev/pwa/Dockerfile.pwa
+    profiles: ["pwa"]
+    volumes:
+      - ./:/tba:delegated
+    ports:
+      - "5173:5173"
+    working_dir: /tba/pwa
+    environment:
+      - VITE_TBA_API_READ_KEY=tba-dev-key
+      - VITE_FIREBASE_API_KEY=fake-api-key
+      - VITE_FIREBASE_AUTH_DOMAIN=demo-test
+      - VITE_FIREBASE_PROJECT_ID=demo-test
+      - VITE_FIREBASE_DATABASE_URL=https://demo-test.firebaseio.com
+      - VITE_FIREBASE_AUTH_EMULATOR_HOST=http://firebase:9099
+      - VITE_TBA_MOBILE_API_BASE_URL=http://tba:8080/clientapi/tbaClient/v9
+
   ### Tools
 
   lint-bash:
